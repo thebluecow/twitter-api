@@ -1,0 +1,24 @@
+{
+  "name": "twitter-api",
+  "version": "1.0.0",
+  "description": "teamtreehouse project to access the twitter API.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thebluecow/twitter-api.git"
+  },
+  "author": "Scott Bline",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thebluecow/twitter-api/issues"
+  },
+  "homepage": "https://github.com/thebluecow/twitter-api#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "pug": "^2.0.0-rc.1",
+    "twit": "^2.2.5"
+  }
+}
