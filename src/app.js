@@ -19,21 +19,21 @@ app.get('/', function(req, res) {
 	
 	aSync.parallel([
 		function(callback) {
-			T.get('friends/list', { user_id: 'thebluecow1', count: 5 },  function (err, data, response) {
+			T.get('friends/list', { count: 5 },  function (err, data, response) {
 				if (err) return callback(err);
 				feed.friends = data;
 				callback();
 			});
 		},
 		function(callback) {
-			T.get('statuses/user_timeline', { user_id: 'thebluecow1', count: 5 },  function (err, data, response) {
+			T.get('statuses/user_timeline', { count: 5 },  function (err, data, response) {
 				if (err) return callback(err);
 				feed.timeline =  data;
 				callback();
 			});
 		},
 		function(callback) {
-			T.get('direct_messages', { count: 5 },  function (err, data, response) {
+			T.get('direct_messages', { count: 6 },  function (err, data, response) {
 				if (err) return callback(err);
 				feed.messages =  data;
 				callback();
@@ -42,9 +42,11 @@ app.get('/', function(req, res) {
 		
 	],
 	function(err) {
-		if (err) throw err;
-		console.log(feed.timeline);
-		res.render('index', { username: "thebluecow1", friends: feed.friends, timeline: feed.timeline, messages: feed.messages });	
+		if (err) {
+			res.render('error', { err: err });	
+		} 
+		console.log(feed.messages);
+		res.render('index', { friends: feed.friends, timeline: feed.timeline, messages: feed.messages });	
 	});
 });
 
