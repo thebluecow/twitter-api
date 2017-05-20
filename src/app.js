@@ -3,8 +3,7 @@ const path = require('path');
 const app = express();
 const Twit = require('twit');
 const config = require('./config.js');
-const twitter = require('./twitter.js');
-const aSync = require('async');
+const async = require('async');
 
 const T = new Twit(config);
 
@@ -17,7 +16,7 @@ app.get('/', function(req, res) {
 	
 	let feed = {};
 	
-	aSync.parallel([
+	async.parallel([
 		function(callback) {
 			T.get('friends/list', { count: 5 },  function (err, data, response) {
 				if (err) return callback(err);
