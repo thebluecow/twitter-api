@@ -2117,7 +2117,7 @@ body {
   position: relative;
 }
 /* line 15, ../sass/global.sass */
-.logo svg {
+.logo svg, .logo img {
   float: left;
   width: 35px;
   fill: #fff;
@@ -2503,4 +2503,8 @@ input[type="button"] {
 
 .error {
 	margin-left: 20px;
+}
+
+.over-max {
+	color: red;
 }

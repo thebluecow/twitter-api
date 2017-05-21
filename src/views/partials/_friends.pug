@@ -11,4 +11,7 @@
 										h4 #{friend.name}
 										p @#{friend.screen_name}
 								.circle--fluid--cell
-									a.button.button-text #{friend.following}
+									if friend.following == true
+										a.button.button-text Unfollow
+									else
+										a.button Follow
