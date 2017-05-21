@@ -47,7 +47,7 @@ $('button.button-primary').click(function() {
 		// post to 'tweet' url, which is used only by app
 		$.post('/tweet', data, function(resp) {
             // do something when it was successful
-			window.location.replace('/');
+			//window.setTimeout(window.location.replace('/'), 2000);
         });
 	}
 });

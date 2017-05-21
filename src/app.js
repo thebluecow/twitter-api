@@ -18,6 +18,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/', function(req, res, next) {
+	console.log('get received');
+	next();
+});
+
 app.get('/', function(req, res) {
 	
 	let feed = {};
@@ -60,7 +65,7 @@ app.post('/tweet', function(req, res) {
 			T.post('statuses/update', { status: req.body.message }, function(err, data, response) {
   				if (err) return callback(err);
 				console.log(data);
-				callback();
+				res.redirect('back');
 			});
 		}
 	],
@@ -68,7 +73,7 @@ app.post('/tweet', function(req, res) {
 		if (err) {
 			res.render('error', { err: err });	
 		} 
-		res.redirect('back');	
+		//res.redirect('back');	
 	});
 });
 
