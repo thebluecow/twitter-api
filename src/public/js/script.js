@@ -1,7 +1,6 @@
-// JavaScript Document
-
 // From stackoverflow: http://stackoverflow.com/questions/6549223/javascript-code-to-display-twitter-created-at-as-xxxx-ago
 
+// sets the created_at date field based on a standard, expected Twitter timestamp
 function parseTwitterDate(tdate) {
     let system_date = new Date(Date.parse(tdate));
     let user_date = new Date();
@@ -40,22 +39,22 @@ $('.app--tweet--timestamp, .app--message--timestamp').each( function(index, valu
 
 // tweets when the 'Tweet' button is clicked.
 $('button.button-primary').click(function() {
+	// prevent the page from submitting.
+	event.preventDefault();
 	if ($('#tweet-textarea').val().length > 0) {
 		// build a json object or do something with the form, store in data
 		let data = { message: $('#tweet-textarea').val() };
 		
 		// post to 'tweet' url, which is used only by app
 		$.post('/tweet', data, function(resp) {
-            // do something when it was successful
-			console.log('response', resp);
-			$.get('/timeline', { layout: false}, function(res) {
-				console.log(res);
-				$('#timeline').html(res);
-			});
         });
+		
+		// reset tweet area to null
+		$('#tweet-textarea').val('');
 	}
 });
 
+// Display to user the character count as a guide
 $("#tweet-textarea").on('keyup', function(event) {
 	let twitterMax = 140 - $('#tweet-textarea').val().length;
 	$('#tweet-char').html(twitterMax.toString());

@@ -1,39 +1,45 @@
 // JavaScript Document
 
-(function () {
-	const init = () => {
-		let serverBaseUrl = 'http://localhost:3000';
-		let socket = io.connect(serverBaseUrl);
-		let sessionId = '';
+// initialize a socket
+const init = () => {
 
-			/*
-		When the client successfully connects to the server, an
-		event "connect" is emitted. Let's get the session ID and
-		log it.
-		*/
-		socket.on('connect', function () {
-			sessionId = socket.io.engine.id;
-			console.log('Connected ' + sessionId);    
-		});
+	let serverBaseUrl = 'http://localhost:3000';
+	let socket = io.connect(serverBaseUrl);
+	let sessionId = '';
+		/*
+	When the client successfully connects to the server, an
+	event "connect" is emitted. Let's get the session ID and
+	log it.
+	*/
+	socket.on('connect', function () {
+		sessionId = socket.io.engine.id;
+		console.log('Connected ' + sessionId);    
+	});
 
-		socket.on('tweeting', function(tweet) {
-			console.log('the tweet', tweet);
+	// listen for "tweeting" event and process accordingly
+	socket.on('tweeting', function(tweet) {
+		
+		// only process tweets that are from the logged in user
+		if (`@${tweet.user.screen_name}` === $('header a.logo h1').text()) {
 			
+			// we only want to display the last 5 tweets
 			if ($('ul.app--tweet--list > li').length >= 5) {
 				$('ul.app--tweet--list > li:last-child').remove();
 			}
-			
+
 			addTweet(tweet);
-		});
-	}
-	
-	init();
+		}
+
+	});
+}
+
+init();
 	
 	const addTweet = tweet => {
 		
 		let tweetItem = `
 					<li>
-						<strong class="app--tweet--timestamp">${tweet.created_at}</strong>
+						<strong class="app--tweet--timestamp">${parseTwitterDate(tweet.created_at)}</strong>
 						<a class="app--tweet--author">
 						  <div class="app--avatar" style="background-image: url(${tweet.user.profile_image_url})">
 							<img src="${tweet.user.profile_image_url}" />
@@ -82,5 +88,3 @@
 		
 		$('.app--tweet--list').prepend(tweetItem);
 	}
-	
-}());
