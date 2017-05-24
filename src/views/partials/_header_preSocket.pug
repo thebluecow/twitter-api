@@ -1,0 +1,26 @@
+if timeline[0].user.profile_banner_url
+	header.circle--header(style='height: 81px; background-image: url(' + timeline[0].user.profile_banner_url + ')')
+		.bounds
+			.circle--fluid
+				.circle--fluid--cell
+					a.logo(href='/')
+						img(src=timeline[0].user.profile_image_url)
+						h1 @#{timeline[0].user.screen_name}
+				div.circle--fluid--cell.align-right
+					nav
+						ul.circle--inline
+							li
+								a Sign Out
+else
+	header.circle--header
+		.bounds
+			.circle--fluid
+				.circle--fluid--cell
+					a.logo(href='/')
+						img(src=timeline[0].user.profile_image_url)
+						h1 @#{timeline[0].user.screen_name}
+				div.circle--fluid--cell.align-right
+					nav
+						ul.circle--inline
+							li
+								a Sign Out
