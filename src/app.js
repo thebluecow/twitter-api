@@ -101,5 +101,7 @@ app.post('/tweet', function(req, res) {
 });
 
 app.get('*', function(req, res) {
-	res.render('error', { err: "The page specified does not exist." });
+	let err = {};
+	err.errno = 'The page specified does not exist.';
+	res.render('error', { err: err });
 });
