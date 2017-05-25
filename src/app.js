@@ -42,6 +42,15 @@ stream.on('tweet', function(tweet) {
 	io.emit('tweeting', tweet);
 });
 
+stream.on('direct_message', function(message) {
+	io.emit('direct_message', message);
+});
+
+stream.on('follow', function(follow) {
+	console.log(follow);
+	io.emit('follow', follow);
+});
+
 // load tweets, friends, and direct messages on load
 app.get('/', function(req, res) {
 
@@ -64,7 +73,7 @@ app.get('/', function(req, res) {
                         });
                 },
                 function(callback) {
-                        T.get('direct_messages', { count: 6 },  function (err, data, response) {
+                        T.get('direct_messages', { count: 5 },  function (err, data, response) {
                                 if (err) return callback(err);
                                 feed.messages =  data;
                                 callback();

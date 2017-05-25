@@ -31,6 +31,26 @@ const init = () => {
 		}
 
 	});
+	
+	socket.on('direct_message', function(message) {
+		// we only want to display the last 5 messages
+			if ($('ul.app--message--list > li > div.conversation').length >= 5) {
+				$('ul.app--message--list > li > div.conversation:last').remove();
+			}
+
+			addMessage(message);
+	});
+	
+	socket.on('follow', function(follow) {
+		console.log(follow);
+		if ($('.app--user--list > li').length >= 5) {
+				$('.app--user--list > li:last').remove();
+		}
+		
+		addFollow(follow);
+		
+	});
+	
 }
 
 init();
@@ -87,4 +107,44 @@ init();
 		
 		
 		$('.app--tweet--list').prepend(tweetItem);
+	}
+	
+	const addMessage = message => {
+		
+		let messageItem = `
+					<li>
+					<h3>Conversation with <a>${message.direct_message.sender_screen_name}</a></h3>
+					<ul class="app--message--conversation">
+					  <li class="app--message">
+						<div class="app--avatar" style="background-image: url(${message.direct_message.sender.profile_image_url})">
+						  <img src="${message.direct_message.sender.profile_image_url}" />
+						</div>
+						<p class="app--message--text">${message.direct_message.text}</p>
+						<p class="app--message--timestamp">${parseTwitterDate(message.direct_message.created_at)}</p>
+					  </li>`;
+		
+		$('.app--message--list li:first').prepend(messageItem);
+	}
+	
+	const addFollow = follow => {
+		
+		let followItem = `
+					<li>
+						<div class="circle--fluid">
+						  <div class="circle--fluid--cell circle--fluid--primary">
+							<a class="app--tweet--author">
+							  <div class="app--avatar" style="background-image: url(${follow.target.profile_image_url})">
+								<img src="${follow.target.profile_image_url}" />
+							  </div>
+							  <h4>${follow.target.name}</h4>
+							  <p>@${follow.target.screen_name}</p>
+							</a>
+						  </div>
+						  <div class="circle--fluid--cell">
+							<a class="button button-text">Unfollow</a>
+						  </div>
+						</div>
+					  </li>`;
+		
+		$('.app--user--list').prepend(followItem);
 	}
