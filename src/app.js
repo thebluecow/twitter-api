@@ -47,7 +47,6 @@ stream.on('direct_message', function(message) {
 });
 
 stream.on('follow', function(follow) {
-	console.log(follow);
 	io.emit('follow', follow);
 });
 

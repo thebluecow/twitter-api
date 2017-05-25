@@ -42,7 +42,7 @@ const init = () => {
 	});
 	
 	socket.on('follow', function(follow) {
-		console.log(follow);
+		// we only want to display the last 5 friends
 		if ($('.app--user--list > li').length >= 5) {
 				$('.app--user--list > li:last').remove();
 		}
